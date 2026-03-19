@@ -141,17 +141,26 @@
     {
       "id": "nmarshak",
       "name": "Nathan X. Marshak",
-      "position": "PhD Student",
+      "position": "PhD Candidate",
       "affiliation": "Scientific Computing and Imaging Institute, University of Utah",
       "titles": [
-        "PhD Student, Scientific Computing and Imaging Institute, University of Utah"
+        "PhD Candidate, Scientific Computing and Imaging Institute, University of Utah"
       ],
       "email": "nmarshak@sci.utah.edu",
+      "researchInterests": [
+         "Scientific Computing",
+         "Numerical solutions to PDEs",
+         "High-performance computing",
+         "Radiation Transport problems"
+      ],
       "authorVariants": [
         "N. Marshak",
         "N. X. Marshak",
         "Nathan X. Marshak"
-      ]
+      ],
+      "background":"Nathan received his BSE in Computer Science in 2013 and MSE in Computer Graphics and Game Technology in 2014. His PhD dissertation focuses on numerical solutions to radiative transfer problems in cosmology.",
+      "photo": "images/team/nathan.jpg",
+      "researchBanner": "images/research/nathan-banner.jpg"
     },
     {
       "id": "tpat",
