@@ -64,10 +64,10 @@
     {
       "id": "jixian-li",
       "name": "Jixian Li",
-      "position": "Postdoctoral Researcher",
-      "affiliation": "Scientific Computing and Imaging Institute, University of Utah",
+      "position": "Research Associate",
+      "affiliation": "Texas Advanced Computing Center, University of Texas at Austin",
       "titles": [
-        "Postdoctoral Researcher, Scientific Computing and Imaging Institute, University of Utah"
+        "Research Associate, Texas Advanced Computing Center, University of Texas at Austin"
       ],
       "email": "jixianli@sci.utah.edu",
       "website": "https://jixianli.github.io/",
@@ -90,9 +90,9 @@
       "id": "tajo",
       "name": "Timbwaoga A. J. Ouermi",
       "position": "Postdoctoral Researcher",
-      "affiliation": "Scientific Computing and Imaging Institute, University of Utah",
+      "affiliation": "Oak Ridge National Laboratory",
       "titles": [
-        "Postdoctoral Researcher, Scientific Computing and Imaging Institute, University of Utah"
+        "Postdoctoral Researcher, Oak Ridge National Laboratory"
       ],
       "photo": "images/team/tajo.jpg",
       "email": "touermi@sci.utah.edu",
