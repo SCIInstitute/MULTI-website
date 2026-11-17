@@ -69,11 +69,11 @@
       "titles": [
         "Research Associate, Texas Advanced Computing Center, University of Texas at Austin"
       ],
-      "email": "jixianli@sci.utah.edu",
+      "email": "jixianli@tacc.utexas.edu",
       "website": "https://jixianli.github.io/",
       "photo": "images/team/jixianli.jpeg",
       "researchBanner": "images/research/jixian-li-banner.png",
-      "background": "Jixian Li is a postdoctoral research associate at the Scientific Computing and Imaging (SCI) Institute at the University of Utah, mentored by Dr. Chris Johnson. His work advances the integration of scientific visualization and machine learning, developing algorithms that help researchers extract and interpret detailed insights from computational fluid dynamics, medical imaging, and biomedical simulation data. He earned his Ph.D. in Computer Science from the University of Arizona under the supervision of Dr. Joshua A. Levine. His dissertation studied deep learning approaches for exploring collections of visual features of scalar fields. His research encompasses scientific visualization, uncertainty quantification, machine learning, and computational topology, all aimed at empowering scientists to compute, analyze, and communicate their discoveries more effectively.",
+      "background": "Jixian Li is a research associate in the Scalable Computational Intelligence team at the Texas Advanced Computing Center (TACC), University of Texas at Austin, working with scientists to design and build intelligent systems that improve and automate scientific data analysis workflows, with the goal of making scientific discovery simple and efficient. Before TACC, Jixian was a postdoctoral researcher at the Scientific Computing and Imaging (SCI) Institute, University of Utah, with Dr. Chris Johnson, building visualization methods for computational fluid dynamics, medical imaging and biomedical simulations. Jixian earned a Ph.D. in Computer Science from the University of Arizona with Dr. Joshua A. Levine; the dissertation studied deep learning for exploring collections of visual features of scalar fields. Research interests span visualization, uncertainty analysis, machine learning and computational topology for scientific data, all aimed at helping scientists compute, analyze and communicate what they find.",
       "researchInterests": [
         "Scientific Visualization",
         "Machine Learning",
