@@ -43,7 +43,7 @@
 - Content updates require only JSON file edits
 - No knowledge of HTML/CSS/JS needed for content changes
 - Adding a team member: edit team.json, add photo
-- Adding publications: edit publications.json
+- Adding publications: add them to the SCI publications database; the site syncs daily (see CONTENT-UPDATE.md)
 - Changing descriptions: edit group.json or team.json
 
 ### NFR-2: No Build Step
@@ -110,8 +110,8 @@
 
 - All data in JSON format
 - UTF-8 encoding
-- Publications derived from BibTeX (converted to JSON)
-- Author names must match between team.json variants and publications.json
+- Publications are BibTeX (data/publications.bib, generated daily from the SCI database), parsed client-side
+- Author names must match between team.json variants and publications.bib
 
 ## Content Requirements
 

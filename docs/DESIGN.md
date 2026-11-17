@@ -26,13 +26,13 @@ The fundamental principle is **complete separation between content data and rend
 ┌─────────────────────────────────────────────────────────────┐
 │                         /css/                               │
 │  variables.css  - Design tokens (colors, fonts, spacing)    │
-│  main.css       - All styles (layout, components, pages)    │
+│  multi.css      - All styles (layout, components, pages)    │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                          /js/                               │
-│  main.js        - Data loading, rendering, interactions     │
+│  multi.js       - Data loading, rendering, interactions     │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
@@ -107,9 +107,9 @@ User Clicks Team Card                   │
 ├── content.html            # Embeddable content for WordPress
 ├── /css/
 │   ├── variables.css       # CSS custom properties
-│   └── main.css            # All styles
+│   └── multi.css           # All styles
 ├── /js/
-│   └── main.js             # All JavaScript
+│   └── multi.js            # All JavaScript
 ├── /data/
 │   ├── group.json          # Group description
 │   ├── team.json           # Team members
