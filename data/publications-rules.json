@@ -1,0 +1,86 @@
+{
+  "source": {
+    "url": "https://publications.sci.utah.edu/publications/sci.bib",
+    "requiredHeader": "%%: Scientific Computing and Imaging (SCI) Institute.",
+    "reason": "The SCI publications database exports every SCI publication to this one static file. SCI does not change the database for us, so all fixes happen here, after fetching."
+  },
+  "selection": {
+    "anyName": ["C. R. Johnson"],
+    "inFields": ["author", "editor"],
+    "reason": "The site lists the MULTI group's publications: every SCI entry with C. R. Johnson as an author or editor (editor covers the chapters of The Visualization Handbook, which the site has always listed). Names are compared ignoring spaces, periods and case, because the database writes the same person as \"C. R. Johnson\", \"C.R. Johnson\" and \"C R. Johnson\"."
+  },
+  "safety": {
+    "minimumSourceEntryFraction": 0.95,
+    "maximumSelectedEntryDrop": 3,
+    "reason": "A failed or partial download can still return HTTP 200. If the source shrinks this much, nothing is published and the run fails so a person can look."
+  },
+  "rules": [
+    {
+      "id": "collapse-whitespace",
+      "type": "regex",
+      "fields": "all",
+      "pattern": "\\s+",
+      "replacement": " ",
+      "reason": "The database wraps long values over several lines. One line per value keeps commit diffs readable."
+    },
+    {
+      "id": "trim-whitespace",
+      "type": "regex",
+      "fields": "all",
+      "pattern": "^\\s+|\\s+$",
+      "replacement": "",
+      "reason": "Stray spaces at the start or end of a value (a title ending in a space) show up as changes in the diff and trip the website-parser check."
+    },
+    {
+      "id": "latex-accents",
+      "type": "latexAccents",
+      "fields": "all",
+      "combiningMarks": {
+        "\"": "̈",
+        "'": "́",
+        "`": "̀"
+      },
+      "reason": "Some entries spell accented letters in LaTeX ({\\\"o}). The site shows field text as-is, so these become Unicode (ö). To support another accent, add its LaTeX symbol and Unicode combining mark here."
+    },
+    {
+      "id": "latex-ampersand",
+      "type": "literal",
+      "fields": "all",
+      "find": "\\&",
+      "replace": "&",
+      "reason": "LaTeX escape for &; the site would show the backslash."
+    },
+    {
+      "id": "strip-case-braces",
+      "type": "regex",
+      "fields": "all",
+      "pattern": "[{}]",
+      "replacement": "",
+      "reason": "Braces only protect capitalization when LaTeX typesets the entry ({CIBC}); the site would show them literally. Runs after latex-accents, which needs the braces."
+    },
+    {
+      "id": "initial-missing-period",
+      "type": "regex",
+      "fields": ["author", "editor"],
+      "pattern": "(?<![\\w.])([A-Z])(?= [A-Z])",
+      "replacement": "\\1.",
+      "reason": "Typos like \"C R. Johnson\" in the database. Team filtering matches the text \"C. R. Johnson\" (team.json authorVariants), so a missing period hides the paper from that member's list."
+    },
+    {
+      "id": "space-initials",
+      "type": "regex",
+      "fields": ["author", "editor"],
+      "pattern": "\\b([A-Z])\\.(?=[A-Z])",
+      "replacement": "\\1. ",
+      "reason": "The database writes initials without spaces (\"C.R. Johnson\"), but team.json authorVariants use \"C. R. Johnson\", and the site's team filter matches text exactly. Without this, clicking a team member shows almost nothing."
+    },
+    {
+      "id": "collapse-repeated-and",
+      "type": "regex",
+      "fields": ["author", "editor"],
+      "pattern": "\\band(\\s+and)+\\b",
+      "replacement": "and",
+      "reason": "The database often writes \"and and\" before the last author, an empty name between two separators."
+    }
+  ]
+}

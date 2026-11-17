@@ -8,7 +8,7 @@ This guide explains how to update website content **without touching any code**.
 |--------------|----------------|
 | Group description | `data/group.json` |
 | Team members | `data/team.json` |
-| Publications | `data/publications.bib` |
+| Publications | generated daily; fix via `data/publications-overrides.json` (see [Publications](#publications)) |
 | Team photos | `images/team/` folder |
 
 ## Before You Start
@@ -171,72 +171,63 @@ The `authorVariants` field must include **all ways** the person's name appears i
 
 ---
 
-## Adding Publications
+## Publications
 
-**File:** `data/publications.bib`
+**Do not edit `data/publications.bib`.** It is generated every day from the SCI publications database
+(https://publications.sci.utah.edu) by `scripts/sync_publications.py`, run by the GitHub Action
+`.github/workflows/sync-publications.yml`, and any hand edit is overwritten by the next run.
 
-Publications are stored in standard BibTeX format. The website parses this file directly.
-
-### BibTeX Entry Format
-
-```bibtex
-@Article{SCI:Doe2025a,
-  author =    "J. Doe and C. R. Johnson",
-  title =     "A Great Paper Title",
-  journal =   "IEEE Transactions on Visualization",
-  year =      "2025",
-  url =       "https://publications.sci.utah.edu/...",
-  doi =       "10.1109/TVCG.2025.12345",
-}
+```
+data/source/sci.bib                the database export as fetched (never edit)
+data/publications-rules.json       rule book: which entries are selected, and cleanup rules for all of them
+data/publications-overrides.json   per-entry fixes: patch, exclude, add
+data/publications.bib              generated: patch, then select, then clean up, then exclude and add
 ```
 
-### Adding a Single Publication
+Each daily run that finds a change commits it, and the commit message lists every added, removed, renamed and
+changed entry, every rule and override that applied, and why. `git log data/publications.bib` is the decision log.
 
-1. Open `data/publications.bib`
-2. Add the new entry at the **top** of the file (after any header comments)
-3. Include all required fields
+### Adding a Publication
 
-**Entry Types:**
-- `@Article` - Journal papers
-- `@InProceedings` - Conference papers
-- `@Book` - Books
-- `@InCollection` - Book chapters
-- `@Misc` - Preprints, technical reports
+Add it to the SCI publications database; it appears on the site the next day. If it cannot go into the database,
+add it under `"add"` in `data/publications-overrides.json`:
 
-**Required fields:**
-- `author` - Authors separated by " and "
-- `title` - Full title in quotes
-- `year` - Publication year
-- `journal` or `booktitle` - Venue name
+```json
+{"key": "MULTI:Doe2025a", "type": "Article", "reason": "Why it is not in the SCI database",
+ "fields": {"author": "J. Doe and C. R. Johnson", "title": "A Great Paper Title",
+            "journal": "IEEE Transactions on Visualization and Computer Graphics", "year": "2025",
+            "url": "https://...", "doi": "10.1109/TVCG.2025.12345"}}
+```
 
-**Optional fields:**
-- `url` - Link to PDF
-- `doi` - DOI identifier (without https://doi.org/)
-- `volume`, `number`, `pages` - Journal details
+If the database later gains the same key, the sync stops with an error asking you to remove the override.
+
+### Fixing or Removing a Publication
+
+- One entry is wrong (a typo in the database): add a `"patch"` with the corrected fields and a reason.
+- One entry should not be listed: add an `"exclude"` with a reason.
+- The same problem in many entries (an encoding or formatting pattern): add a rule to
+  `data/publications-rules.json`, with a reason.
+
+Then rebuild from the stored export (no download) and commit with the generated message, adding your own reason
+at the top:
+
+```bash
+python3 scripts/sync_publications.py --no-fetch --commit-message-file /tmp/message.txt
+git commit -a --file /tmp/message.txt
+```
 
 ### Author Name Format
 
-**Critical:** Author names must match the `authorVariants` in `team.json` for filtering to work.
+Team filtering matches the text of `authorVariants` in `team.json` against each author. The rule book writes
+initials as `C. R. Johnson` (the database writes `C.R. Johnson`), so variants should use the spaced form.
 
-Standard format: `First Initial. Last Name` separated by ` and `
+### If the Sync Fails
 
-```bibtex
-author = "C. R. Johnson and T. M. Athawale and J. Doe",
-```
-
-Examples:
-- `C. R. Johnson` ✓
-- `T. M. Athawale` ✓
-- `Chris Johnson` (also valid, add to authorVariants in team.json)
-
----
-
-## Removing a Publication
-
-1. Open `data/publications.bib`
-2. Find the publication (search by title or key)
-3. Delete the entire entry from `@Type{` to the closing `}`
-4. Save the file
+The Action fails, and GitHub emails the repository maintainers, when the download fails, the export is not
+valid UTF-8, or the export looks truncated (far fewer entries than the stored one). Nothing is published then.
+An HTTP 403 or 429 means the SCI server is refusing the job: contact SCI IT. While that is being sorted out,
+download the export with `curl -o sci.bib <url>` (a browser may mangle its encoding) and run
+`python3 scripts/sync_publications.py --source-file sci.bib`.
 
 ---
 

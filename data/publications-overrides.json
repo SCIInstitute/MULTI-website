@@ -1,0 +1,11 @@
+{
+  "patch": [
+    {
+      "key": "SCI:Mac94d",
+      "fields": {"author": "R.S. MacLeod and P.R. Ershler and C.R. Johnson"},
+      "reason": "The database writes \"C.R. Johnson M.A.\" with no \"and\", so the name never matches C. R. Johnson and the entry drops out of the selection. The trailing \"M.A.\" is taken to be a stray degree and dropped."
+    }
+  ],
+  "exclude": [],
+  "add": []
+}

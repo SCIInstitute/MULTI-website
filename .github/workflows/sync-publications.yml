@@ -1,0 +1,33 @@
+name: Sync publications
+
+on:
+  schedule:
+    # 09:17 UTC (02:17 or 03:17 in Utah): off the hour, when scheduled jobs everywhere pile up, and outside working hours.
+    - cron: "17 9 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-publications
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch the SCI export and rebuild data/publications.bib
+        run: python3 scripts/sync_publications.py --commit-message-file "$RUNNER_TEMP/commit-message.txt"
+      - name: Commit and push if anything changed
+        run: |
+          if [ -z "$(git status --porcelain -- data)" ]; then
+            echo "Nothing changed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/source data/publications.bib
+          git commit --file "$RUNNER_TEMP/commit-message.txt"
+          git push
