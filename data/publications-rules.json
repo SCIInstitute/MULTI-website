@@ -59,6 +59,14 @@
       "reason": "Braces only protect capitalization when LaTeX typesets the entry ({CIBC}); the site would show them literally. Runs after latex-accents, which needs the braces."
     },
     {
+      "id": "encode-url-spaces",
+      "type": "literal",
+      "fields": ["url"],
+      "find": " ",
+      "replace": "%20",
+      "reason": "The database stores PDF links with literal spaces (\"Fast HARDI Uncertainty.pdf\"). Browsers repair them in a link, but the site's Copy BibTeX button hands out the raw URL, which breaks \\url{} in LaTeX. Runs after collapse-whitespace and trim-whitespace, so only spaces inside the URL remain."
+    },
+    {
       "id": "initial-missing-period",
       "type": "regex",
       "fields": ["author", "editor"],
