@@ -19,3 +19,6 @@ node_modules/
 
 # University template
 umctheme3
+
+# Python bytecode cache (scripts/sync_publications.py)
+__pycache__/
